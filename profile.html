@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="icon" href="R (4) - Copy.jpeg">
+</head>
+<body>
+
+    <style>
+        *{
+            margin:0;
+            padding: 0;
+
+        }
+        main{
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #014179;;
+            
+        }
+        #center{
+
+            background-color: rgb(241, 234, 234);
+            height: 300px;
+            width: 700px;
+            border-radius: 30px;
+           display: flex;
+           justify-content: center;
+           align-items: center;
+
+        }
+    </style>
+    <main>
+        <div id="center">
+            <h1 id="name"></h1>
+        </div>
+
+    </main>
+
+    <script>
+
+        let dataaa = localStorage.getItem('nameee');
+
+        let name = document.getElementById('name');
+
+
+        name.innerText = 'Welcome 🙌' + dataaa
+        
+    </script>
+    
+</body>
+</html>
