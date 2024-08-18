@@ -72,7 +72,8 @@ ul li:hover {
 #div-Doc {
     /* min-height: 200px; */
     width: 90%;
-    background-color: rgb(130, 148, 245);
+     background-color: #014179;;
+    /* background-color: rgb(130, 148, 245);*/
     margin: 10px;
     border-radius: 5px;
     text-align: left;
