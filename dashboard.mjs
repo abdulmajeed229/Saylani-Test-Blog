@@ -49,7 +49,7 @@ querySnapshot.forEach((doc) => {
         <div id='div-Doc' data-id="${doc.id}">
             <h1>${MineData.titlePost}</h1>
             <p id="datttt">Posted on ${datee + '/' + moth + '/' + yeR}</p>
-            <p class="content" data-full-content="${MineData.contentPost}">${MineData.contentPost.substring(0, 100)}... <button class="read-more-btn">Read More</button></p>
+            <p class="content" data-full-content="${MineData.contentPost}">${MineData.contentPost.substring(0, 250)}... <button class="read-more-btn">Read More</button></p>
             <button class="delete-btn">🗑️</button>
         </div>`;
 });
@@ -72,7 +72,7 @@ show.addEventListener('click', function(e) {
             
         } else {
 
-            contentParagraph.innerHTML = `${fullContent.substring(0, 100)}... <button class="read-more-btn">Read More</button>`; 
+            contentParagraph.innerHTML = `${fullContent.substring(0, 250)}... <button class="read-more-btn">Read More</button>`; 
         }
     }
 });
