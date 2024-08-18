@@ -121,6 +121,15 @@ outline: none;
     width: 100%;
     padding-left: 10px;
 }
+.read-more-btn{
+
+    background-color: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 
 
 
