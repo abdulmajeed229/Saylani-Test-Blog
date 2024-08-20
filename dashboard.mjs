@@ -17,19 +17,8 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-// Authentication State Listener
-onAuthStateChanged(auth, (user) => {
-    if (!user) {
 
-        location.replace('login.html');
-    } else {
-    
-        loadDashboard();
-    }
-});
-
-
-async function loadDashboard() {
+// async function loadDashboard() {
     var show = document.getElementById('postBlock');
 
     const querySnapshot = await getDocs(collection(db, "PostData"));
