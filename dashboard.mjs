@@ -1,3 +1,13 @@
+
+
+
+
+
+
+
+
+
+
 // Firebase Initialization
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
@@ -62,36 +72,19 @@ querySnapshot.forEach((doc) => {
 
     show.innerHTML += `
 
-        <div id='div-Doc' data-id="${doc.id}">
+        <div id='div-Doc'">
 
             <h1>${MineData.titlePost}</h1>
 
             <p id="datttt">Posted on ${datee + '/' + moth + '/' + yeR}</p>
 
-            <p class="content" data-full-content="${MineData.contentPost}">${MineData.contentPost.substring(0, 100)}... <button class="read-more-btn">Read More</button></p>
+            <p >${MineData.contentPost}</p>
 
             <button class="delete-btn">🗑️</button>
 
         </div>`;
 });
 
-
-
-show.addEventListener('click', function(e) {
-
-    if (e.target.classList.contains('read-more-btn')) {
-
-        const postDiv = e.target.closest('#div-Doc');
-        const contentParagraph = postDiv.querySelector('.content');
-        const fullContent = contentParagraph.getAttribute('data-full-content');
-
-        if (e.target.textContent === "Read More") {
-            contentParagraph.innerHTML = `${fullContent} <button class="read-more-btn">Read Less</button>`;
-        } else {
-            contentParagraph.innerHTML = `${fullContent.substring(0, 100)}... <button class="read-more-btn">Read More</button>`;
-        }
-    }
-});
 
 
 
