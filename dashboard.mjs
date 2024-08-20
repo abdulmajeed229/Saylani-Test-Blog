@@ -1,7 +1,7 @@
 // Firebase Initialization
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { getAuth, signOut} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 import { getFirestore, collection, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -18,7 +18,7 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 
 
-// async function loadDashboard() {
+
     var show = document.getElementById('postBlock');
 
     const querySnapshot = await getDocs(collection(db, "PostData"));
@@ -56,7 +56,7 @@ const auth = getAuth(app);
 
     // Handle Post Deletion
     show.addEventListener('click', deletePost);
-}
+
 
 // Function to delete post
 async function deletePost(event) {
