@@ -82,18 +82,13 @@ show.addEventListener('click', function(e) {
     if (e.target.classList.contains('read-more-btn')) {
 
         const postDiv = e.target.closest('#div-Doc');
-
         const contentParagraph = postDiv.querySelector('.content');
-
         const fullContent = contentParagraph.getAttribute('data-full-content');
 
         if (e.target.textContent === "Read More") {
-
-            contentParagraph.innerHTML = `${fullContent} <button class="read-more-btn">Read Less</button>`; 
-            
+            contentParagraph.innerHTML = `${fullContent} <button class="read-more-btn">Read Less</button>`;
         } else {
-
-            contentParagraph.innerHTML = `${fullContent.substring(0, 100)}... <button class="read-more-btn">Read More</button>`; 
+            contentParagraph.innerHTML = `${fullContent.substring(0, 100)}... <button class="read-more-btn">Read More</button>`;
         }
     }
 });
