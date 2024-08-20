@@ -17,12 +17,12 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-// Check if user is authenticated
-onAuthStateChanged(auth, (user) => {
-    if (!user) {
-        location.replace('login.html');
-    }
-});
+// // Check if user is authenticated
+// onAuthStateChanged(auth, (user) => {
+//     if (!user) {
+//         location.replace('login.html');
+//     }
+// });
 
 // Navbar Hide / Show 
 let list = document.getElementById('list');
