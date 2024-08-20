@@ -1,7 +1,7 @@
 // Firebase Initialization
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 import { getFirestore, collection, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -10,15 +10,21 @@ const firebaseConfig = {
     projectId: "saylani-tes",
     storageBucket: "saylani-tes.appspot.com",
     messagingSenderId: "1047819898222",
-    appId: "1:1047819898222:web:c455f60fcbf86431ddc57f"
+    appId: "1:1047819898222:web:c455f60fcbf86431ddc57f" 
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-// Navbar Hide / Show
+// Check if user is authenticated
+onAuthStateChanged(auth, (user) => {
+    if (!user) {
+        location.replace('login.html');
+    }
+});
 
+// Navbar Hide / Show 
 let list = document.getElementById('list');
 let btnnn = document.getElementById('btnnn');
 
@@ -30,60 +36,46 @@ btnnn.addEventListener('click', function () {
     }
 });
 
-// GetData From Firebase
-
+// Get Data From Firebase
 var show = document.getElementById('postBlock');
 
 const querySnapshot = await getDocs(collection(db, "PostData"));
 
 querySnapshot.forEach((doc) => {
     let today = new Date();
-
     var datee = today.getDate();
     var moth = today.getMonth() + 1; 
     let yeR = today.getFullYear();
-
     var MineData = doc.data();
 
     show.innerHTML += `
         <div id='div-Doc' data-id="${doc.id}">
             <h1>${MineData.titlePost}</h1>
             <p id="datttt">Posted on ${datee + '/' + moth + '/' + yeR}</p>
-            <p class="content" data-full-content="${MineData.contentPost}">${MineData.contentPost.substring(0, 250)}... <button class="read-more-btn">Read More</button></p>
+            <p class="content" data-full-content="${MineData.contentPost}">${MineData.contentPost.substring(0, 100)}... <button class="read-more-btn">Read More</button></p>
             <button class="delete-btn">🗑️</button>
         </div>`;
 });
 
-
-
+// Handle 'Read More' functionality
 show.addEventListener('click', function(e) {
-
     if (e.target.classList.contains('read-more-btn')) {
-
         const postDiv = e.target.closest('#div-Doc');
-
         const contentParagraph = postDiv.querySelector('.content');
-
         const fullContent = contentParagraph.getAttribute('data-full-content');
 
         if (e.target.textContent === "Read More") {
-
             contentParagraph.innerHTML = `${fullContent} <button class="read-more-btn">Read Less</button>`; 
-            
         } else {
-
-            contentParagraph.innerHTML = `${fullContent.substring(0, 250)}... <button class="read-more-btn">Read More</button>`; 
+            contentParagraph.innerHTML = `${fullContent.substring(0, 100)}... <button class="read-more-btn">Read More</button>`; 
         }
     }
 });
 
-
-
-
-// Delete Post Firebase
-
+// Delete Post from Firebase
 async function deletePost(event) {
     const button = event.target;
+
     if (button.classList.contains('delete-btn')) {
         const postDiv = button.closest('#div-Doc');
         const postId = postDiv.getAttribute('data-id');
@@ -102,7 +94,6 @@ async function deletePost(event) {
 show.addEventListener('click', deletePost);
 
 // Log Out Firebase
-
 let logOut = document.getElementById('logOut');
 
 logOut.addEventListener('click', function () {
@@ -114,7 +105,6 @@ logOut.addEventListener('click', function () {
 });
 
 // Search Bar Hide / Show
-
 let soll = document.getElementById('soll');
 let finBtn = document.getElementById('finBtn');
 
@@ -127,7 +117,6 @@ finBtn.addEventListener('click', function () {
 });
 
 // Post Search
-
 let ghj = document.querySelectorAll('#div-Doc');
 let findd = document.getElementById('findd');
 
