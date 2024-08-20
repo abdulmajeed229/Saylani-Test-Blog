@@ -10,69 +10,66 @@ const firebaseConfig = {
     projectId: "saylani-tes",
     storageBucket: "saylani-tes.appspot.com",
     messagingSenderId: "1047819898222",
-    appId: "1:1047819898222:web:c455f60fcbf86431ddc57f" 
+    appId: "1:1047819898222:web:c455f60fcbf86431ddc57f"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-// // Check if user is authenticated
-// onAuthStateChanged(auth, (user) => {
-//     if (!user) {
-//         location.replace('login.html');
-//     }
-// });
+// Authentication State Listener
+onAuthStateChanged(auth, (user) => {
+    if (!user) {
 
-// Navbar Hide / Show 
-let list = document.getElementById('list');
-let btnnn = document.getElementById('btnnn');
-
-btnnn.addEventListener('click', function () {
-    if (list.style.display == 'none') {
-        list.style.display = 'block';
+        location.replace('login.html');
     } else {
-        list.style.display = 'none';
+    
+        loadDashboard();
     }
 });
 
-// Get Data From Firebase
-var show = document.getElementById('postBlock');
 
-const querySnapshot = await getDocs(collection(db, "PostData"));
+async function loadDashboard() {
+    var show = document.getElementById('postBlock');
 
-querySnapshot.forEach((doc) => {
-    let today = new Date();
-    var datee = today.getDate();
-    var moth = today.getMonth() + 1; 
-    let yeR = today.getFullYear();
-    var MineData = doc.data();
+    const querySnapshot = await getDocs(collection(db, "PostData"));
+    
+    querySnapshot.forEach((doc) => {
+        let today = new Date();
+        var datee = today.getDate();
+        var moth = today.getMonth() + 1; 
+        let yeR = today.getFullYear();
+        var MineData = doc.data();
 
-    show.innerHTML += `
-        <div id='div-Doc' data-id="${doc.id}">
-            <h1>${MineData.titlePost}</h1>
-            <p id="datttt">Posted on ${datee + '/' + moth + '/' + yeR}</p>
-            <p class="content" data-full-content="${MineData.contentPost}">${MineData.contentPost.substring(0, 100)}... <button class="read-more-btn">Read More</button></p>
-            <button class="delete-btn">🗑️</button>
-        </div>`;
-});
+        show.innerHTML += `
+            <div id='div-Doc' data-id="${doc.id}">
+                <h1>${MineData.titlePost}</h1>
+                <p id="datttt">Posted on ${datee + '/' + moth + '/' + yeR}</p>
+                <p class="content" data-full-content="${MineData.contentPost}">${MineData.contentPost.substring(0, 100)}... <button class="read-more-btn">Read More</button></p>
+                <button class="delete-btn">🗑️</button>
+            </div>`;
+    });
 
-// Handle 'Read More' functionality
-show.addEventListener('click', function(e) {
-    if (e.target.classList.contains('read-more-btn')) {
-        const postDiv = e.target.closest('#div-Doc');
-        const contentParagraph = postDiv.querySelector('.content');
-        const fullContent = contentParagraph.getAttribute('data-full-content');
+    // Handle 'Read More' functionality
+    show.addEventListener('click', function(e) {
+        if (e.target.classList.contains('read-more-btn')) {
+            const postDiv = e.target.closest('#div-Doc');
+            const contentParagraph = postDiv.querySelector('.content');
+            const fullContent = contentParagraph.getAttribute('data-full-content');
 
-        if (e.target.textContent === "Read More") {
-            contentParagraph.innerHTML = `${fullContent} <button class="read-more-btn">Read Less</button>`; 
-        } else {
-            contentParagraph.innerHTML = `${fullContent.substring(0, 100)}... <button class="read-more-btn">Read More</button>`; 
+            if (e.target.textContent === "Read More") {
+                contentParagraph.innerHTML = `${fullContent} <button class="read-more-btn">Read Less</button>`; 
+            } else {
+                contentParagraph.innerHTML = `${fullContent.substring(0, 100)}... <button class="read-more-btn">Read More</button>`; 
+            }
         }
-    }
-});
+    });
 
-// Delete Post from Firebase
+    // Handle Post Deletion
+    show.addEventListener('click', deletePost);
+}
+
+// Function to delete post
 async function deletePost(event) {
     const button = event.target;
 
@@ -91,7 +88,17 @@ async function deletePost(event) {
     }
 }
 
-show.addEventListener('click', deletePost);
+// Navbar Hide / Show 
+let list = document.getElementById('list');
+let btnnn = document.getElementById('btnnn');
+
+btnnn.addEventListener('click', function () {
+    if (list.style.display == 'none') {
+        list.style.display = 'block';
+    } else {
+        list.style.display = 'none';
+    }
+});
 
 // Log Out Firebase
 let logOut = document.getElementById('logOut');
@@ -117,10 +124,11 @@ finBtn.addEventListener('click', function () {
 });
 
 // Post Search
-let ghj = document.querySelectorAll('#div-Doc');
 let findd = document.getElementById('findd');
 
 findd.addEventListener('input', function () {
+    let ghj = document.querySelectorAll('#div-Doc');
+
     for (let i = 0; i < ghj.length; i++) {
         if (ghj[i].textContent.toLowerCase().includes(findd.value.toLowerCase())) {
             ghj[i].style.display = 'block';
